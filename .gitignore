@@ -1,0 +1,10 @@
+# Cargo
+/target/
+Cargo.lock
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Binary folder
+bin/
