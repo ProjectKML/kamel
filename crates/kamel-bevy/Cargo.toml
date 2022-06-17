@@ -1,0 +1,15 @@
+[package]
+name = "kamel-bevy"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bevy_app = "0.7.0"
+bevy_core = "0.7.0"
+bevy_ecs = "0.7.0"
+bevy_input = "0.7.0"
+bevy_log = "0.7.0"
+bevy_window = "0.7.0"
+bevy_winit = "0.7.0"
