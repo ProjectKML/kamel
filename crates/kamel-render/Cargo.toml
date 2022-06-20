@@ -1,0 +1,15 @@
+[package]
+name = "kamel-render"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.58"
+ash = { git = "https://github.com/projectkml/ash" }
+ash-window = { git = "https://github.com/projectkml/ash" }
+kamel-bevy = { path = "../kamel-bevy" }
+libc = "0.2.126"
+log = "0.4.17"
+raw-window-handle = "0.4.3"

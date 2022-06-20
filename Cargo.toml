@@ -3,5 +3,6 @@
 members = [
 	"crates/kamel-bevy",
 	"crates/kamel-common",
-	"crates/kamel-game"
+	"crates/kamel-game",
+	"crates/kamel-render"
 ]
