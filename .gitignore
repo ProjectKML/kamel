@@ -8,3 +8,5 @@ Cargo.lock
 
 # Binary folder
 bin/
+
+*.DS_Store

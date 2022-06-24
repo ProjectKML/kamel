@@ -6,6 +6,7 @@ use ash::{
     prelude::VkResult,
     vk
 };
+use vk_mem::{Allocator, AllocatorCreateInfo};
 
 use crate::backend::{Instance, Surface};
 
@@ -175,6 +176,9 @@ impl Extensions {
     }
 }
 
+unsafe impl Send for Extensions {}
+unsafe impl Sync for Extensions {}
+
 pub struct Queue {
     queue: vk::Queue,
     family_index: u32
@@ -205,6 +209,8 @@ pub struct Device {
     loader: Arc<ash::Device>,
     swapchain_loader: Swapchain,
     mesh_shader_loader: MeshShader,
+
+    allocator: Arc<Allocator>,
 
     extensions: Extensions,
 
@@ -355,7 +361,7 @@ impl Device {
         let swapchain_loader = Swapchain::new(instance_loader, &loader);
         let mesh_shader_loader = MeshShader::new(instance_loader, &loader);
 
-        //TODO: allocator
+        let allocator = Arc::new(Allocator::new(AllocatorCreateInfo::new(instance.loader(), &loader, &physical_device))?);
 
         let direct_queue = Queue::new(&loader, direct_queue_family_index);
         let compute_queue = Queue::new(&loader, compute_queue_family_index);
@@ -368,7 +374,7 @@ impl Device {
             swapchain_loader,
             mesh_shader_loader,
 
-            //TODO: allocator,
+            allocator,
             extensions,
 
             properties,
@@ -407,7 +413,10 @@ impl Device {
         &self.mesh_shader_loader
     }
 
-    //TODO: allocator getter
+    #[inline]
+    pub fn allocator(&self) -> &Arc<Allocator> {
+        &self.allocator
+    }
 
     #[inline]
     pub fn extensions(&self) -> &Extensions {

@@ -13,3 +13,4 @@ kamel-bevy = { path = "../kamel-bevy" }
 libc = "0.2.126"
 log = "0.4.17"
 raw-window-handle = "0.4.3"
+vk-mem = { git = "https://github.com/zmarlon/vk-mem-rs" }
