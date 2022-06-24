@@ -7,9 +7,9 @@ use ash::{
 };
 use raw_window_handle::HasRawWindowHandle;
 
-use crate::backend::{Device, Instance, Surface};
+use crate::backend::{Device, Instance, Surface, Swapchain};
 
-pub fn initialize(window: &impl HasRawWindowHandle) -> (Arc<Instance>, Arc<Surface>, Arc<Device>) {
+pub fn initialize(window: &impl HasRawWindowHandle) -> (Arc<Instance>, Arc<Surface>, Arc<Device>, Arc<Swapchain>) {
     let instance = Instance::new(window, |entry_loader, layers, extensions| unsafe {
         let version = entry_loader.try_enumerate_instance_version()?.unwrap_or(vk::API_VERSION_1_0);
         let major = vk::api_version_major(version);
@@ -63,5 +63,7 @@ pub fn initialize(window: &impl HasRawWindowHandle) -> (Arc<Instance>, Arc<Surfa
         .unwrap()
     };
 
-    (instance, surface, device)
+    let swapchain = Swapchain::new(instance.clone(), surface.clone(), device.clone(), true).unwrap();
+
+    (instance, surface, device, swapchain)
 }
