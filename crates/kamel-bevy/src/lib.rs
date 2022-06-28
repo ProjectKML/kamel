@@ -2,6 +2,10 @@ pub mod app {
     pub use bevy_app::*;
 }
 
+pub mod asset {
+    pub use bevy_asset::*;
+}
+
 pub mod core {
     pub use bevy_core::*;
 }
@@ -16,6 +20,10 @@ pub mod input {
 
 pub mod log {
     pub use bevy_log::*;
+}
+
+pub mod reflect {
+    pub use bevy_reflect::*;
 }
 
 pub mod window {

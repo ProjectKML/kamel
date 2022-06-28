@@ -9,6 +9,7 @@ edition = "2021"
 anyhow = "1.0.58"
 ash = { git = "https://github.com/projectkml/ash" }
 ash-window = { git = "https://github.com/projectkml/ash" }
+hassle-rs = { git = "https://github.com/projectkml/hassle-rs" }
 kamel-bevy = { path = "../kamel-bevy" }
 libc = "0.2.126"
 log = "0.4.17"

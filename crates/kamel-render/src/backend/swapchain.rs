@@ -15,7 +15,8 @@ impl SurfaceCapabilities {
         Ok(Self {
             surface_capabilities: instance
                 .get_surface_capabilities2_loader()
-                .get_physical_device_surface_capabilities2(*device.physical_device(), surface_info)?.surface_capabilities
+                .get_physical_device_surface_capabilities2(*device.physical_device(), surface_info)?
+                .surface_capabilities
         })
     }
 }
@@ -36,7 +37,9 @@ impl SurfaceFormats {
             .collect();
         get_surface_capabilities2_loader.get_physical_device_surface_formats2(physical_device, surface_info, &mut supported_formats)?;
 
-        Ok(Self { supported_formats: supported_formats.iter().map(|format| format.surface_format).collect() })
+        Ok(Self {
+            supported_formats: supported_formats.iter().map(|format| format.surface_format).collect()
+        })
     }
 
     #[inline]

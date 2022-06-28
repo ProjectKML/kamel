@@ -2,14 +2,18 @@
 
 pub mod backend;
 pub mod renderer;
+pub mod resource;
 
 use std::ops::{Deref, DerefMut};
 
 use kamel_bevy::{
     app::{self as bevy_app, App, AppLabel, Plugin},
-    ecs::{self as bevy_ecs, schedule::StageLabel, world::World}
+    asset::AddAsset,
+    ecs::{self as bevy_ecs, schedule::StageLabel, world::World},
+    window::Windows
 };
-use kamel_bevy::window::Windows;
+
+use crate::resource::{Shader, ShaderLoader};
 
 #[derive(Debug, Hash, PartialEq, Eq, Clone, StageLabel)]
 pub enum RenderStage {
@@ -44,6 +48,11 @@ pub struct RenderPlugin;
 
 impl Plugin for RenderPlugin {
     fn build(&self, app: &mut App) {
+        app.add_asset::<Shader>()
+            .add_debug_asset::<Shader>()
+            .init_asset_loader::<ShaderLoader>()
+            .init_debug_asset_loader::<ShaderLoader>();
+
         let render_app = App::new();
 
         let windows = app.world.resource_mut::<Windows>();
