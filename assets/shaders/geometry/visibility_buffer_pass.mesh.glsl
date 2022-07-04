@@ -17,5 +17,5 @@ layout(set = 0, binding = 0) readonly buffer VisibleClusters {
 layout(location = 0) out flat uint[] cluster_ids;
 
 void main() {
-
+    const uint giid = gl_GlobalInvocationID.x;
 }

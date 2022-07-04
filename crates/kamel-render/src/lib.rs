@@ -1,6 +1,7 @@
 #![allow(clippy::missing_safety_doc)]
 
 pub mod backend;
+pub mod graph;
 pub mod renderer;
 pub mod resource;
 

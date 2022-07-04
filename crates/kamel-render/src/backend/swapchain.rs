@@ -46,7 +46,7 @@ impl SurfaceFormats {
     pub fn find_ldr_format(&self) -> Option<vk::SurfaceFormatKHR> {
         const FORMATS: [vk::Format; 4] = [vk::Format::R8G8B8A8_SRGB, vk::Format::B8G8R8A8_SRGB, vk::Format::R8G8B8A8_UNORM, vk::Format::B8G8R8A8_UNORM];
 
-        self.supported_formats.iter().find(|f| FORMATS.contains(&f.format)).map(|f| *f)
+        self.supported_formats.iter().find(|f| FORMATS.contains(&f.format)).copied()
     }
 
     #[inline]
@@ -54,7 +54,7 @@ impl SurfaceFormats {
         self.supported_formats
             .iter()
             .find(|f| f.format == vk::Format::R16G16B16A16_SFLOAT && f.color_space == vk::ColorSpaceKHR::EXTENDED_SRGB_LINEAR_EXT)
-            .map(|f| *f)
+            .copied()
     }
 }
 
@@ -179,10 +179,11 @@ impl Swapchain {
                 .ok_or_else(|| anyhow::anyhow!("Failed to find surface format"))?;
 
             let used_present_mode = if vsync_enabled {
-                vk::PresentModeKHR::FIFO
+                get_present_mode_if_supported(vk::PresentModeKHR::FIFO_RELAXED)
+                    .unwrap_or(vk::PresentModeKHR::FIFO)
             } else {
-                get_present_mode_if_supported(vk::PresentModeKHR::IMMEDIATE)
-                    .or_else(|| get_present_mode_if_supported(vk::PresentModeKHR::MAILBOX))
+                get_present_mode_if_supported(vk::PresentModeKHR::MAILBOX)
+                    .or_else(|| get_present_mode_if_supported(vk::PresentModeKHR::IMMEDIATE))
                     .unwrap_or(vk::PresentModeKHR::FIFO)
             };
 
@@ -282,6 +283,3 @@ impl Drop for Swapchain {
         }
     }
 }
-
-unsafe impl Send for Swapchain {}
-unsafe impl Sync for Swapchain {}

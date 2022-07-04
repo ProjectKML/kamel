@@ -20,10 +20,10 @@ uint64_t encode_visibility(uint depth, uint cluster_id, uint triangle_id) {
 }
 
 void main() {
-    ivec2 frag_coord = ivec2(gl_FragCoord.xy);
+    const ivec2 frag_coord = ivec2(gl_FragCoord.xy);
 
-    uint depth = uint((gl_FragCoord.z / gl_FragCoord.w) * float(0x3FFFFFFF));
-    uint64_t visibility = encode_visibility(depth, cluster_id, gl_PrimitiveID);
+    const uint depth = uint((gl_FragCoord.z / gl_FragCoord.w) * float(0x3FFFFFFF));
+    const uint64_t visibility = encode_visibility(depth, cluster_id, gl_PrimitiveID);
 
 #ifdef USE_SOFTWARE_DEPTH_TEST
     imageAtomicMax(visibility_image, frag_coord, visibility);
