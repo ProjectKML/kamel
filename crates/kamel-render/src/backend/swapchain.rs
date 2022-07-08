@@ -179,8 +179,7 @@ impl Swapchain {
                 .ok_or_else(|| anyhow::anyhow!("Failed to find surface format"))?;
 
             let used_present_mode = if vsync_enabled {
-                get_present_mode_if_supported(vk::PresentModeKHR::FIFO_RELAXED)
-                    .unwrap_or(vk::PresentModeKHR::FIFO)
+                get_present_mode_if_supported(vk::PresentModeKHR::FIFO_RELAXED).unwrap_or(vk::PresentModeKHR::FIFO)
             } else {
                 get_present_mode_if_supported(vk::PresentModeKHR::MAILBOX)
                     .or_else(|| get_present_mode_if_supported(vk::PresentModeKHR::IMMEDIATE))
